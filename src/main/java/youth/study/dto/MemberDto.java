@@ -9,9 +9,8 @@ import lombok.Setter;
 @NoArgsConstructor
 public class MemberDto {
 
-    private String id;
     private String email;
-    private String memberName;
+    private String name;
     private String password;
 
 
