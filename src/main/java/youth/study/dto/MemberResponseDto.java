@@ -5,13 +5,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
-@Setter
 @NoArgsConstructor
-public class MemberDto {
-
+@Setter
+public class MemberResponseDto {
     private String email;
     private String name;
-    private String password;
-
-
 }

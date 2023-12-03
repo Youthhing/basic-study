@@ -1,8 +1,9 @@
 package youth.study.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.Builder;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import youth.study.dto.MemberDto;
+import youth.study.dto.MemberRequestDto;
 import youth.study.entity.Member;
 import youth.study.repository.MemberRepository;
 
@@ -11,16 +12,17 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class MemberService {
 
-    @Autowired
-    private MemberRepository memberRepository;
+    private final MemberRepository memberRepository;
 
-    public void signUp(MemberDto memberDto) {
-        Member member = new Member();
-        member.setEmail(memberDto.getEmail());
-        member.setName(memberDto.getName());
-        member.setPassword(memberDto.getPassword());
+    public void signUp(MemberRequestDto memberRequestDto) {
+        Member member = Member.builder()
+                .email(memberRequestDto.getEmail())
+                .name(memberRequestDto.getName())
+                .password(memberRequestDto.getPassword())
+                .build();
         memberRepository.save(member);
     }
 
@@ -30,15 +32,12 @@ public class MemberService {
                 .collect(Collectors.toList());
     }
 
-    public MemberDto getMemberInfo(Long memberId) {
-        Optional<Member> optionalMember = memberRepository.findById(memberId);
-        if (optionalMember.isPresent()) {
-            Member member = optionalMember.get();
-            MemberDto memberDto = new MemberDto();
-            memberDto.setEmail(member.getEmail());
-            memberDto.setName(member.getName());
-            return memberDto;
-        }
-        return null;
+    public MemberRequestDto getMemberInfo(Long memberId) {
+        return memberRepository.findById(memberId)
+                .map(member -> MemberRequestDto.builder()
+                        .email(member.getEmail())
+                        .name(member.getName())
+                        .build())
+                .orElseThrow(() -> new IllegalArgumentException("Member not found with id: " + memberId));
     }
 }

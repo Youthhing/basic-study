@@ -1,8 +1,7 @@
 package youth.study.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import youth.study.dto.MemberDto;
+import youth.study.dto.MemberRequestDto;
 import youth.study.service.MemberService;
 
 import java.util.List;
@@ -11,12 +10,15 @@ import java.util.List;
 @RequestMapping("/members")
 public class MemberController {
 
-    @Autowired
-    private MemberService memberService;
+    private final MemberService memberService;
+
+    public MemberController(MemberService memberService) {
+        this.memberService = memberService;
+    }
 
     @PostMapping("/sign-up")
-    public void signUp(@RequestBody MemberDto memberDto) {
-        memberService.signUp(memberDto);
+    public void signUp(@RequestBody MemberRequestDto memberRequestDto) {
+        memberService.signUp(memberRequestDto);
     }
 
     @GetMapping("/names")
@@ -25,7 +27,7 @@ public class MemberController {
     }
 
     @GetMapping("/{id}")
-    public MemberDto getMemberInfo(@PathVariable Long id) {
+    public MemberRequestDto getMemberInfo(@PathVariable Long id) {
         return memberService.getMemberInfo(id);
     }
 }
