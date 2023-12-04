@@ -1,14 +1,13 @@
 package youth.study.service;
 
-import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import youth.study.dto.MemberRequestDto;
+import youth.study.dto.MemberResponseDto;
 import youth.study.entity.Member;
 import youth.study.repository.MemberRepository;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -32,9 +31,9 @@ public class MemberService {
                 .collect(Collectors.toList());
     }
 
-    public MemberRequestDto getMemberInfo(Long memberId) {
+    public MemberResponseDto getMemberInfo(Long memberId) {
         return memberRepository.findById(memberId)
-                .map(member -> MemberRequestDto.builder()
+                .map(member -> MemberResponseDto.builder()
                         .email(member.getEmail())
                         .name(member.getName())
                         .build())

@@ -1,13 +1,14 @@
 package youth.study.dto;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
 @Setter
+@Builder
 public class MemberResponseDto {
+
     private String email;
     private String name;
 }

@@ -2,6 +2,7 @@ package youth.study.controller;
 
 import org.springframework.web.bind.annotation.*;
 import youth.study.dto.MemberRequestDto;
+import youth.study.dto.MemberResponseDto;
 import youth.study.service.MemberService;
 
 import java.util.List;
@@ -27,7 +28,7 @@ public class MemberController {
     }
 
     @GetMapping("/{id}")
-    public MemberRequestDto getMemberInfo(@PathVariable Long id) {
+    public MemberResponseDto getMemberInfo(@PathVariable Long id) {
         return memberService.getMemberInfo(id);
     }
 }
