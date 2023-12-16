@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import youth.study.dto.MemberRequestDto;
 import youth.study.dto.MemberResponseDto;
 import youth.study.entity.Member;
+import youth.study.exception.MemberNotFoundException;
 import youth.study.repository.MemberRepository;
 
 import java.util.List;
@@ -37,6 +38,6 @@ public class MemberService {
                         .email(member.getEmail())
                         .name(member.getName())
                         .build())
-                .orElseThrow(() -> new IllegalArgumentException("Member not found with id: " + memberId));
+                .orElseThrow(() -> new MemberNotFoundException("Member not found with id: " + memberId));
     }
 }
